@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ArgHelper.cs" />
     <Compile Include="ConfigAppSettingArg.cs" />
+    <Compile Include="IniArg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

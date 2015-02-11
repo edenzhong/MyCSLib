@@ -34,7 +34,7 @@ namespace ArgHelper
         /// <param name="inf">The help information of the property comes with this attribute.</param>
         /// <param name="defultVal">The default value of the property.</param>
         /// <param name="t">The ArgType of the property.</param>
-        /// <param name="mandatory">Specify if the property value must be specified. Not implement yet.</param>
+        /// <param name="mandatory">Specify if the property value must be specified. </param>
         public ArgInfAttribute(string inf = "", string defultVal = null, ArgType t = ArgType.KeyValue, bool mandatory = false)
         {
             HelpInf = inf;
@@ -55,7 +55,7 @@ namespace ArgHelper
         /// </summary>
         public ArgType AType { get; set; }
         /// <summary>
-        /// Specify if the property value must be specified. Not implement yet.
+        /// Specify if the property value must be specified. 
         /// </summary>
         public bool Mandatory { get; set; }
     }
@@ -183,7 +183,7 @@ namespace ArgHelper
                     }
                     catch { }
                 }
-                if (null != argStr)
+                if ((null != argStr) && (argStr.Length>0))
                 {
                     if (!args.SetValFromString(p, argStr))
                     {
@@ -243,6 +243,30 @@ namespace ArgHelper
 
             }
             return helpInfo.ToString();
+        }
+
+        /// <summary>
+        /// Check if all mandate properties of an IArg are initialized.
+        /// </summary>
+        /// <param name="arg">The IArg to be checked.</param>
+        /// <returns>True if all mandate properties are initialized.</returns>
+        public static bool IsMandateInited(this IArg arg)
+        {
+            Type t = arg.GetType();
+            var ps = t.GetProperties();
+            foreach (var p in ps)
+            {
+                Object[] atts = p.GetCustomAttributes(typeof(ArgInfAttribute), false);
+                foreach (object o in atts)
+                {
+                    ArgInfAttribute attr = o as ArgInfAttribute;
+                    if ((null != attr) && ( attr.Mandatory ))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
     }
 }
