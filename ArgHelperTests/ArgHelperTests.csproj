@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CmdLine\CmdArgsTests.cs" />
+    <Compile Include="CmdLine\CmdLineArgLoaderTests.cs" />
     <Compile Include="CmdLine\CmdLineArgTests.cs" />
     <Compile Include="CmdLine\TokenFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
