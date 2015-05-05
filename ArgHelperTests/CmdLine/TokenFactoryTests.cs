@@ -45,7 +45,28 @@ namespace ArgHelper.CmdLine.Tests
             cover = TokenFactory.DashTokenCreator(out kv, "Slot1", "hello eden");
             Assert.AreEqual(cover, 0);
 
+            cover = TokenFactory.DashTokenCreator(out kv, "-Slot 1", "hello eden");
+            Assert.AreEqual(cover, 0);
+
             cover = TokenFactory.DashTokenCreator(out kv, "--Slot1", "hello eden");
+            Assert.AreEqual(cover, 0);
+        }
+
+        [TestMethod()]
+        public void SingleTokenCreatorTest()
+        {
+            KeyValuePair<string, string> kv;
+            int cover;
+            cover = TokenFactory.SingleTokenCreator(out kv, "eden", null);
+            Assert.AreEqual(cover, 1);
+
+            cover = TokenFactory.SingleTokenCreator(out kv, "_eden-zhong", null);
+            Assert.AreEqual(cover, 1);
+
+            cover = TokenFactory.SingleTokenCreator(out kv, "-eden", null);
+            Assert.AreEqual(cover, 0);
+
+            cover = TokenFactory.SingleTokenCreator(out kv, "eden zhong", null);
             Assert.AreEqual(cover, 0);
         }
     }

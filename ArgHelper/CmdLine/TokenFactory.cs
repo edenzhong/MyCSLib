@@ -16,7 +16,7 @@ namespace ArgHelper.CmdLine
         {
             Register(DashTokenCreator);
             //Register(TwoDashTokenCreator);
-            //Register(SingleTokenCreator);
+            Register(SingleTokenCreator);
             //Register(EqualTokenCreator);
         }
         public void Register(TokenCreator c)
@@ -41,7 +41,7 @@ namespace ArgHelper.CmdLine
             return 0;
         }
 
-        static Regex DashTokenRegex = new Regex("^-[_a-zA-Z0-9][-_a-zA-Z0-9]+");
+        static Regex DashTokenRegex = new Regex("^-[_a-zA-Z0-9][-_a-zA-Z0-9]*$");
         public static int DashTokenCreator(out KeyValuePair<string,string> kv,string token, string value)
         {
             kv = new KeyValuePair<string, string>(null,null);
@@ -59,22 +59,22 @@ namespace ArgHelper.CmdLine
             return 2;
         }
 
-        //static Regex SingleTokenRegex = new Regex("^[^-][-_a-zA-Z0-9]+");
-        //public static int SingleTokenCreator(out KeyValuePair<string,string> kv,string token, string value)
-        //{
-        //    kv = new KeyValuePair<string, string>(null, null);
-        //    if (null == token)
-        //    {
-        //        return 0;
-        //    }
+        static Regex SingleTokenRegex = new Regex("^[_a-zA-Z0-9][-_a-zA-Z0-9]*$");
+        public static int SingleTokenCreator(out KeyValuePair<string, string> kv, string token, string value)
+        {
+            kv = new KeyValuePair<string, string>(null, null);
+            if (null == token)
+            {
+                return 0;
+            }
 
-        //    if (!SingleTokenRegex.IsMatch(token))
-        //    {
-        //        return 0;
-        //    }
-        //    kv = new KeyValuePair<string, string>(token.Substring(1), value);
+            if (!SingleTokenRegex.IsMatch(token))
+            {
+                return 0;
+            }
+            kv = new KeyValuePair<string, string>(null, token);
 
-        //    return 2;
-        //}
+            return 1;
+        }
     }
 }
