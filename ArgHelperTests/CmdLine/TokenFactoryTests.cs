@@ -69,5 +69,32 @@ namespace ArgHelper.CmdLine.Tests
             cover = TokenFactory.SingleTokenCreator(out kv, "eden zhong", null);
             Assert.AreEqual(cover, 0);
         }
+
+        [TestMethod()]
+        public void DoubleDashTokenCreatorTest()
+        {
+            KeyValuePair<string, string> kv;
+            int cover;
+            cover = TokenFactory.DoubleDashTokenCreator(out kv, "--_Slot1", "hello eden");
+            Assert.AreEqual(cover, 2);
+
+            cover = TokenFactory.DoubleDashTokenCreator(out kv, "--Slot-1", "hello eden");
+            Assert.AreEqual(cover, 2);
+
+            cover = TokenFactory.DoubleDashTokenCreator(out kv, "--Slot1", null);
+            Assert.AreEqual(cover, 0);
+
+            cover = TokenFactory.DoubleDashTokenCreator(out kv, null, "hello eden");
+            Assert.AreEqual(cover, 0);
+
+            cover = TokenFactory.DoubleDashTokenCreator(out kv, "Slot1", "hello eden");
+            Assert.AreEqual(cover, 0);
+
+            cover = TokenFactory.DoubleDashTokenCreator(out kv, "--Slot 1", "hello eden");
+            Assert.AreEqual(cover, 0);
+
+            cover = TokenFactory.DoubleDashTokenCreator(out kv, "-Slot1", "hello eden");
+            Assert.AreEqual(cover, 0);
+        }
     }
 }

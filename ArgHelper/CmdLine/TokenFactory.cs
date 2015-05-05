@@ -15,7 +15,7 @@ namespace ArgHelper.CmdLine
         public TokenFactory()
         {
             Register(DashTokenCreator);
-            //Register(TwoDashTokenCreator);
+            Register(DoubleDashTokenCreator);
             Register(SingleTokenCreator);
             //Register(EqualTokenCreator);
         }
@@ -55,6 +55,24 @@ namespace ArgHelper.CmdLine
                 return 0;
             }
             kv = new KeyValuePair<string, string>(token.Substring(1), value);
+
+            return 2;
+        }
+
+        static Regex DoubleDashTokenRegex = new Regex("^--[_a-zA-Z0-9][-_a-zA-Z0-9]*$");
+        public static int DoubleDashTokenCreator(out KeyValuePair<string, string> kv, string token, string value)
+        {
+            kv = new KeyValuePair<string, string>(null, null);
+            if ((null == token) || (null == value))
+            {
+                return 0;
+            }
+
+            if (!DoubleDashTokenRegex.IsMatch(token))
+            {
+                return 0;
+            }
+            kv = new KeyValuePair<string, string>(token.Substring(2), value);
 
             return 2;
         }
