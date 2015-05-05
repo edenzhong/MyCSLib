@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgHelper.cs" />
+    <Compile Include="CmdLine\CmdLineArg.cs" />
+    <Compile Include="CmdLine\TokenFactory.cs" />
     <Compile Include="ConfigAppSettingArg.cs" />
     <Compile Include="IniArg.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
