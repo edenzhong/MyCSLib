@@ -17,7 +17,7 @@ namespace ArgHelper.CmdLine
             Register(DashTokenCreator);
             Register(DoubleDashTokenCreator);
             Register(SingleTokenCreator);
-            //Register(EqualTokenCreator);
+            Register(EqualTokenCreator);
         }
         public void Register(TokenCreator c)
         {
@@ -75,6 +75,25 @@ namespace ArgHelper.CmdLine
             kv = new KeyValuePair<string, string>(token.Substring(2), value);
 
             return 2;
+        }
+
+        static Regex EqualTokenRegex = new Regex("^[_a-zA-Z0-9][-_a-zA-Z0-9]*=[_a-zA-Z0-9][-_a-zA-Z0-9 ]*[_a-zA-Z0-9]$");
+        public static int EqualTokenCreator(out KeyValuePair<string, string> kv, string token, string value)
+        {
+            kv = new KeyValuePair<string, string>(null, null);
+            if ((null == token))
+            {
+                return 0;
+            }
+
+            if (!EqualTokenRegex.IsMatch(token))
+            {
+                return 0;
+            }
+            int idx = token.IndexOf('=');
+            kv = new KeyValuePair<string, string>(token.Substring(0,idx), token.Substring(idx+1));
+
+            return 1;
         }
 
         static Regex SingleTokenRegex = new Regex("^[_a-zA-Z0-9][-_a-zA-Z0-9]*$");
